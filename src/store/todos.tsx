@@ -14,6 +14,8 @@ type Todo ={
 type TodoContext={
     todos:Todo[];
     handleTodo:(task:string)=> void;
+    toggleTodoAsComplete: (id:string) =>void;
+    handleDeleteTodo:(id:string)=> void
 }
 
 
@@ -35,7 +37,28 @@ export const  TodoProvider =({children}:TodoProviderProps)=>{
         })
 
        }
-        return <todoContext.Provider value={{todos, handleTodo}}>
+       const toggleTodoAsComplete =(id: string)=>{
+           setTodos((prev)=>{
+               let newTodos = prev.map((todo)=>{
+                if(todo.id === id){
+                    return {...todo, completed:!todo.completed}
+                }
+                return todo
+               })
+               return newTodos
+           })
+       }
+       const handleDeleteTodo=(id:string)=>{
+                setTodos((prev)=>{
+                    let newTodos = prev.filter((todo)=>{
+                        return todo.id !== id
+                    })
+                    return  newTodos;
+                })
+                
+
+       }
+        return <todoContext.Provider value={{todos, handleTodo,toggleTodoAsComplete,handleDeleteTodo}}>
             {children}
         </todoContext.Provider>
 }

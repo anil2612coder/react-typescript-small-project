@@ -3,7 +3,7 @@ import { useTodos } from "../store/todos";
 
 const Todos = () => {
 
-  const {todos} = useTodos();
+  const {todos,toggleTodoAsComplete,handleDeleteTodo} = useTodos();
   const filterData = todos;
   return (
     <ul>
